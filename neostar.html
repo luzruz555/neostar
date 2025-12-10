@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEOSTAR</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #000;
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #000;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #222;
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: 'Arial Black', sans-serif;
+      font-size: 24px;
+      font-style: italic;
+      font-weight: 900;
+      letter-spacing: -1px;
+    }
+
+    .header-icons {
+      display: flex;
+      gap: 20px;
+    }
+
+    .header-icons span {
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    /* Main Container */
+    .main-container {
+      padding-top: 60px;
+      padding-bottom: 60px;
+      max-width: 470px;
+      margin: 0 auto;
+    }
+
+    /* Stories Bar */
+    .stories-bar {
+      display: flex;
+      gap: 15px;
+      padding: 15px;
+      overflow-x: auto;
+      border-bottom: 1px solid #222;
+    }
+
+    .stories-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .story-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .story-avatar {
+      width: 66px;
+      height: 66px;
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    }
+
+    .story-avatar.no-story {
+      background: #333;
+    }
+
+    .story-avatar img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 3px solid #000;
+      object-fit: cover;
+    }
+
+    .story-username {
+      font-size: 11px;
+      color: #999;
+      max-width: 70px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* Posts */
+    .post {
+      border-bottom: 1px solid #222;
+    }
+
+    .post-header {
+      display: flex;
+      align-items: center;
+      padding: 12px 15px;
+      gap: 10px;
+    }
+
+    .post-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      cursor: pointer;
+    }
+
+    .post-username {
+      font-weight: 600;
+      font-size: 14px;
+      flex: 1;
+      cursor: pointer;
+    }
+
+    .post-more {
+      font-size: 18px;
+      cursor: pointer;
+      color: #888;
+    }
+
+    .post-image {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      background: #111;
+    }
+
+    .post-actions {
+      display: flex;
+      gap: 15px;
+      padding: 12px 15px;
+    }
+
+    .post-actions span {
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .post-likes {
+      padding: 0 15px 8px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .post-caption {
+      padding: 0 15px 12px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .post-caption strong {
+      font-weight: 600;
+      margin-right: 6px;
+    }
+
+    .post-comments {
+      padding: 0 15px 8px;
+      font-size: 13px;
+      color: #888;
+      cursor: pointer;
+    }
+
+    .post-time {
+      padding: 0 15px 15px;
+      font-size: 10px;
+      color: #666;
+      text-transform: uppercase;
+    }
+
+    /* Profile Page */
+    .profile-page {
+      display: none;
+      padding-top: 60px;
+      padding-bottom: 60px;
+    }
+
+    .profile-page.active {
+      display: block;
+    }
+
+    .main-container.hidden {
+      display: none;
+    }
+
+    .profile-header {
+      padding: 20px;
+      display: flex;
+      gap: 25px;
+      align-items: center;
+    }
+
+    .profile-avatar {
+      width: 86px;
+      height: 86px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .profile-info {
+      flex: 1;
+    }
+
+    .profile-username {
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .profile-stats {
+      display: flex;
+      gap: 25px;
+      margin-bottom: 15px;
+    }
+
+    .profile-stats span {
+      font-size: 14px;
+    }
+
+    .profile-stats strong {
+      font-weight: 600;
+    }
+
+    .profile-bio {
+      padding: 0 20px 20px;
+    }
+
+    .profile-name {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .profile-desc {
+      font-size: 14px;
+      line-height: 1.5;
+      color: #ddd;
+    }
+
+    .profile-tabs {
+      display: flex;
+      border-top: 1px solid #222;
+    }
+
+    .profile-tab {
+      flex: 1;
+      padding: 15px;
+      text-align: center;
+      font-size: 12px;
+      cursor: pointer;
+      border-top: 1px solid transparent;
+      margin-top: -1px;
+      color: #888;
+    }
+
+    .profile-tab.active {
+      border-top-color: #fff;
+      color: #fff;
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .grid-item {
+      aspect-ratio: 1;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .grid-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .grid-item:hover {
+      opacity: 0.8;
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 12px;
+      left: 16px;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 101;
+      display: none;
+    }
+
+    .back-btn.show {
+      display: block;
+    }
+
+    /* Bottom Nav */
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #000;
+      padding: 12px 0;
+      display: flex;
+      justify-content: space-around;
+      border-top: 1px solid #222;
+      z-index: 100;
+    }
+
+    nav span {
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    /* Admin Modal */
+    .admin-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.9);
+      z-index: 200;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .admin-modal.show {
+      display: flex;
+    }
+
+    .admin-box {
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 15px;
+      padding: 30px;
+      text-align: center;
+      max-width: 320px;
+      width: 90%;
+    }
+
+    .admin-box h3 {
+      font-size: 16px;
+      margin-bottom: 20px;
+      color: #888;
+    }
+
+    .admin-input {
+      width: 100%;
+      padding: 15px;
+      background: #000;
+      border: 1px solid #333;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 18px;
+      text-align: center;
+      letter-spacing: 8px;
+      margin-bottom: 20px;
+    }
+
+    .admin-input::placeholder {
+      letter-spacing: 4px;
+      color: #444;
+    }
+
+    .admin-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .admin-btn {
+      flex: 1;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+    }
+
+    .admin-btn.cancel {
+      background: #333;
+      color: #fff;
+    }
+
+    .admin-btn.confirm {
+      background: #fff;
+      color: #000;
+    }
+
+    /* Glitched/Deleted Posts */
+    .post.deleted {
+      display: none;
+    }
+
+    .post.deleted.revealed {
+      display: block;
+    }
+
+    .post.deleted .post-image {
+      filter: grayscale(100%) contrast(150%);
+      animation: glitchImage 0.5s infinite;
+    }
+
+    .post.deleted .post-caption {
+      color: #666;
+      font-family: monospace;
+    }
+
+    .post.deleted .post-username {
+      color: #ff0000;
+      text-decoration: line-through;
+    }
+
+    @keyframes glitchImage {
+      0% { transform: translate(0); filter: grayscale(100%) contrast(150%); }
+      20% { transform: translate(-2px, 2px); filter: grayscale(100%) contrast(200%) hue-rotate(90deg); }
+      40% { transform: translate(2px, -1px); filter: grayscale(100%) contrast(150%); }
+      60% { transform: translate(-1px, 1px); filter: grayscale(100%) contrast(180%) hue-rotate(-90deg); }
+      80% { transform: translate(1px, -2px); filter: grayscale(100%) contrast(150%); }
+      100% { transform: translate(0); filter: grayscale(100%) contrast(150%); }
+    }
+
+    .grid-item.deleted {
+      display: none;
+    }
+
+    .grid-item.deleted.revealed {
+      display: block;
+    }
+
+    .grid-item.deleted img {
+      filter: grayscale(100%) contrast(150%);
+      animation: glitchImage 0.5s infinite;
+    }
+
+    /* Search */
+    .search-bar {
+      padding: 10px 15px;
+      display: none;
+    }
+
+    .search-bar.show {
+      display: block;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 12px 15px;
+      background: #222;
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .search-input::placeholder {
+      color: #666;
+    }
+
+    /* Verified Badge */
+    .verified {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      background: #3897f0;
+      border-radius: 50%;
+      position: relative;
+      margin-left: 4px;
+    }
+
+    .verified::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 9px;
+      color: #fff;
+    }
+
+    /* Comment styling for hints */
+    .comment-item {
+      padding: 4px 15px;
+      font-size: 13px;
+    }
+
+    .comment-item strong {
+      font-weight: 600;
+      margin-right: 6px;
+    }
+
+    .comment-item.hint {
+      color: #555;
+    }
+
+    /* Post Modal for viewing single post */
+    .post-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 150;
+      overflow-y: auto;
+      padding: 60px 0;
+    }
+
+    .post-modal.show {
+      display: block;
+    }
+
+    .post-modal .post {
+      max-width: 470px;
+      margin: 0 auto;
+      background: #000;
+    }
+
+    .close-modal {
+      position: fixed;
+      top: 15px;
+      right: 20px;
+      font-size: 28px;
+      cursor: pointer;
+      z-index: 151;
+    }
+
+    /* Follow button */
+    .follow-btn {
+      background: #0095f6;
+      color: #fff;
+      border: none;
+      padding: 7px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .follow-btn:hover {
+      background: #1aa1f7;
+    }
+
+    /* Avatar placeholders */
+    .avatar-placeholder {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .avatar-eden {
+      background: linear-gradient(135deg, #b8860b, #ffd700);
+      color: #fff;
+    }
+
+    .avatar-plt {
+      background: #fff;
+      color: #000;
+      font-family: Arial Black, sans-serif;
+    }
+
+    .avatar-fan {
+      background: linear-gradient(135deg, #ff6b9d, #ff8a80);
+      color: #fff;
+    }
+
+    .avatar-personal {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #fff;
+    }
+
+    /* Image placeholders */
+    .img-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+    }
+
+    .img-eden {
+      background: linear-gradient(135deg, #2d5016, #4a7c23);
+    }
+
+    .img-plt {
+      background: linear-gradient(135deg, #006666, #008080);
+    }
+
+    .img-dark {
+      background: #0a0a0a;
+    }
+
+    .img-glitch {
+      background: repeating-linear-gradient(
+        0deg,
+        #111 0px,
+        #111 2px,
+        #1a1a1a 2px,
+        #1a1a1a 4px
+      );
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <span class="back-btn" id="backBtn" onclick="goBack()">←</span>
+    <span class="logo">NEOSTAR</span>
+    <div class="header-icons">
+      <span onclick="openSearch()">🔍</span>
+      <span>♡</span>
+      <span onclick="openAdminModal()">✉</span>
+    </div>
+  </header>
+
+  <!-- Admin Modal -->
+  <div class="admin-modal" id="adminModal">
+    <div class="admin-box">
+      <h3>관리자 인증</h3>
+      <input type="text" class="admin-input" id="adminInput" maxlength="4" placeholder="● ● ● ●" oninput="checkAdminCode()">
+      <div class="admin-buttons">
+        <button class="admin-btn cancel" onclick="closeAdminModal()">취소</button>
+        <button class="admin-btn confirm" onclick="submitAdminCode()">확인</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Post Modal -->
+  <div class="post-modal" id="postModal">
+    <span class="close-modal" onclick="closePostModal()">×</span>
+    <div id="postModalContent"></div>
+  </div>
+
+  <!-- Main Feed -->
+  <div class="main-container" id="mainFeed">
+    <!-- Search Bar -->
+    <div class="search-bar" id="searchBar">
+      <input type="text" class="search-input" placeholder="검색" id="searchInput" oninput="handleSearch()">
+    </div>
+
+    <!-- Stories -->
+    <div class="stories-bar">
+      <div class="story-item">
+        <div class="story-avatar no-story">
+          <div class="avatar-placeholder" style="background:#333;border:3px solid #000;border-radius:50%;">👤</div>
+        </div>
+        <span class="story-username">Your story</span>
+      </div>
+      <div class="story-item" onclick="openProfile('plt')">
+        <div class="story-avatar">
+          <div class="avatar-placeholder avatar-plt" style="border:3px solid #000;border-radius:50%;">PLT</div>
+        </div>
+        <span class="story-username">PLT_official</span>
+      </div>
+      <div class="story-item" onclick="openProfile('eden')">
+        <div class="story-avatar">
+          <div class="avatar-placeholder avatar-eden" style="border:3px solid #000;border-radius:50%;">👑</div>
+        </div>
+        <span class="story-username">EDEN_official</span>
+      </div>
+      <div class="story-item" onclick="openProfile('love_jhy')">
+        <div class="story-avatar">
+          <div class="avatar-placeholder avatar-fan" style="border:3px solid #000;border-radius:50%;">♡</div>
+        </div>
+        <span class="story-username">Love_jhy</span>
+      </div>
+      <div class="story-item" onclick="openProfile('jhy_official')">
+        <div class="story-avatar">
+          <div class="avatar-placeholder avatar-personal" style="border:3px solid #000;border-radius:50%;">HY</div>
+        </div>
+        <span class="story-username">jhy_official</span>
+      </div>
+      <div class="story-item" onclick="openProfile('seo_yeon')">
+        <div class="story-avatar">
+          <div class="avatar-placeholder avatar-personal" style="border:3px solid #000;border-radius:50%;">SY</div>
+        </div>
+        <span class="story-username">seoyeon_22</span>
+      </div>
+    </div>
+
+    <!-- Posts -->
+    <!-- EDEN Official Post -->
+    <div class="post" data-account="eden">
+      <div class="post-header">
+        <div class="avatar-placeholder avatar-eden post-avatar" onclick="openProfile('eden')">👑</div>
+        <span class="post-username" onclick="openProfile('eden')">EDEN_official<span class="verified"></span></span>
+        <span class="post-more">⋯</span>
+      </div>
+      <div class="post-image img-placeholder img-eden">🌳</div>
+      <div class="post-actions">
+        <span>♡</span>
+        <span>💬</span>
+        <span>✈</span>
+      </div>
+      <div class="post-likes">좋아요 12,847개</div>
+      <div class="post-caption">
+        <strong>EDEN_official</strong>새로운 마법소녀 5인의 데뷔를 축하합니다! 🎉 에덴과 함께 더 밝은 내일을 만들어가요. #EDEN #마법소녀 #데뷔 #WhereДreamsBloом
+      </div>
+      <div class="post-comments">댓글 892개 모두 보기</div>
+      <div class="post-time">2시간 전</div>
+    </div>
+
+    <!-- PLT Post -->
+    <div class="post" data-account="plt">
+      <div class="post-header">
+        <div class="avatar-placeholder avatar-plt post-avatar" onclick="openProfile('plt')">PLT</div>
+        <span class="post-username" onclick="openProfile('plt')">PLT_official<span class="verified"></span></span>
+        <span class="post-more">⋯</span>
+      </div>
+      <div class="post-image img-placeholder img-plt">📰</div>
+      <div class="post-actions">
+        <span>♡</span>
+        <span>💬</span>
+        <span>✈</span>
+      </div>
+      <div class="post-likes">좋아요 8,234개</div>
+      <div class="post-caption">
+        <strong>PLT_official</strong>[속보] S급 마법소녀 정혜연, 이번 주 오염체 토벌 3건 성공! 자세한 내용은 PLT 뉴스에서 확인하세요. 🔗
+      </div>
+      <div class="comment-item">
+        <strong>user_2847</strong> 혜연 언니 최고!! 💕
+      </div>
+      <div class="comment-item hint">
+        <strong>anon_0000</strong> can i...rest?
+      </div>
+      <div class="post-comments">댓글 1,247개 모두 보기</div>
+      <div class="post-time">5시간 전</div>
+    </div>
+
+    <!-- Fan Account Post -->
+    <div class="post" data-account="love_jhy">
+      <div class="post-header">
+        <div class="avatar-placeholder avatar-fan post-avatar" onclick="openProfile('love_jhy')">♡</div>
+        <span class="post-username" onclick="openProfile('love_jhy')">Love_jhy</span>
+        <span class="post-more">⋯</span>
+      </div>
+      <div class="post-image img-placeholder" style="background:linear-gradient(135deg,#ff9a9e,#fecfef);">💝</div>
+      <div class="post-actions">
+        <span>♡</span>
+        <span>💬</span>
+        <span>✈</span>
+      </div>
+      <div class="post-likes">좋아요 3,456개</div>
+      <div class="post-caption">
+        <strong>Love_jhy</strong>혜연이 팬아트 그렸어요!! 💕 진짜 너무 예쁘지 않나요... 실물은 100배 더 예뻐요 ㅠㅠ #정혜연 #팬아트 #마법소녀
+      </div>
+      <div class="post-comments">댓글 234개 모두 보기</div>
+      <div class="post-time">8시간 전</div>
+    </div>
+
+    <!-- Seoyeon Personal Post -->
+    <div class="post" data-account="seo_yeon">
+      <div class="post-header">
+        <div class="avatar-placeholder avatar-personal post-avatar" onclick="openProfile('seo_yeon')">SY</div>
+        <span class="post-username" onclick="openProfile('seo_yeon')">seoyeon_22<span class="verified"></span></span>
+        <span class="post-more">⋯</span>
+      </div>
+      <div class="post-image img-placeholder" style="background:linear-gradient(135deg,#a8edea,#fed6e3);">☕</div>
+      <div class="post-actions">
+        <span>♡</span>
+        <span>💬</span>
+        <span>✈</span>
+      </div>
+      <div class="post-likes">좋아요 15,678개</div>
+      <div class="post-caption">
+        <strong>seoyeon_22</strong>오랜만에 휴식! 오늘 하루도 모두 화이팅이에요 💪 #일상 #카페 #휴식
+      </div>
+      <div class="comment-item">
+        <strong>eden_fan_01</strong> 서연언니 몸 조심하세요!! 💕
+      </div>
+      <div class="comment-item hint">
+        <strong>anon_0000</strong> can i...stop?
+      </div>
+      <div class="post-comments">댓글 2,891개 모두 보기</div>
+      <div class="post-time">12시간 전</div>
+    </div>
+
+    <!-- JHY Official Post -->
+    <div class="post" data-account="jhy_official">
+      <div class="post-header">
+        <div class="avatar-placeholder avatar-personal post-avatar" onclick="openProfile('jhy_official')">HY</div>
+        <span class="post-username" onclick="openProfile('jhy_official')">jhy_official<span class="verified"></span></span>
+        <span class="post-more">⋯</span>
+      </div>
+      <div class="post-image img-placeholder" style="background:linear-gradient(135deg,#ffecd2,#fcb69f);">✨</div>
+      <div class="post-actions">
+        <span>♡</span>
+        <span>💬</span>
+        <span>✈</span>
+      </div>
+      <div class="post-likes">좋아요 28,934개</div>
+      <div class="post-caption">
+        <strong>jhy_official</strong>여러분 사랑해요! 오늘도 여러분 덕분에 힘이 나요 💕 항상 함께해줘서 고마워요! #정혜연 #사랑해요 #팬사랑
+      </div>
+      <div class="comment-item">
+        <strong>Love_jhy</strong> 혜연아 사랑해!!! 💕💕💕
+      </div>
+      <div class="comment-item hint">
+        <strong>anon_0000</strong> can i...go home?
+      </div>
+      <div class="post-comments">댓글 5,672개 모두 보기</div>
+      <div class="post-time">1일 전</div>
+    </div>
+
+    <!-- DELETED POSTS (Hidden by default) -->
+    <div class="post deleted" data-account="unknown">
+      <div class="post-header">
+        <div class="avatar-placeholder post-avatar" style="background:#222;">?</div>
+        <span class="post-username">[삭제된 계정]</span>
+        <span class="post-more">⋯</span>
+      </div>
+      <div class="post-image img-placeholder img-glitch">░</div>
+      <div class="post-actions">
+        <span>♡</span>
+        <span>💬</span>
+        <span>✈</span>
+      </div>
+      <div class="post-likes">좋아요 ???개</div>
+      <div class="post-caption">
+        <strong>[삭제됨]</strong>3일째. 아직 안 왔어.
+      </div>
+      <div class="post-time">??? 전</div>
+    </div>
+
+    <div class="post deleted" data-account="unknown">
+      <div class="post-header">
+        <div class="avatar-placeholder post-avatar" style="background:#222;">?</div>
+        <span class="post-username">[삭제된 계정]</span>
+        <span class="post-more">⋯</span>
+      </div>
+      <div class="post-image img-placeholder img-dark"></div>
+      <div class="post-actions">
+        <span>♡</span>
+        <span>💬</span>
+        <span>✈</span>
+      </div>
+      <div class="post-likes">좋아요 ???개</div>
+      <div class="post-caption">
+        <strong>[삭제됨]</strong>문이 안 열려.
+      </div>
+      <div class="post-time">??? 전</div>
+    </div>
+
+    <div class="post deleted" data-account="unknown">
+      <div class="post-header">
+        <div class="avatar-placeholder post-avatar" style="background:#222;">?</div>
+        <span class="post-username">[삭제된 계정]</span>
+        <span class="post-more">⋯</span>
+      </div>
+      <div class="post-image img-placeholder img-glitch"></div>
+      <div class="post-actions">
+        <span>♡</span>
+        <span>💬</span>
+        <span>✈</span>
+      </div>
+      <div class="post-likes">좋아요 ???개</div>
+      <div class="post-caption">
+        <strong>[삭제됨]</strong>괜찮아. 다 괜찮아. 괜찮아. 괜찮아. 괜찮아.
+      </div>
+      <div class="post-time">??? 전</div>
+    </div>
+
+    <div class="post deleted" data-account="unknown">
+      <div class="post-header">
+        <div class="avatar-placeholder post-avatar" style="background:#300;">!</div>
+        <span class="post-username">[회수됨]</span>
+        <span class="post-more">⋯</span>
+      </div>
+      <div class="post-image img-placeholder img-dark" style="color:#300;font-size:24px;">회수 완료</div>
+      <div class="post-actions">
+        <span>♡</span>
+        <span>💬</span>
+        <span>✈</span>
+      </div>
+      <div class="post-likes">좋아요 0개</div>
+      <div class="post-caption">
+        <strong>[시스템]</strong>███님이 회수되었습니다. 협조해주셔서 감사합니다.
+      </div>
+      <div class="post-time">처리 완료</div>
+    </div>
+  </div>
+
+  <!-- Profile Pages -->
+  <!-- EDEN Profile -->
+  <div class="profile-page" id="profile-eden">
+    <div class="profile-header">
+      <div class="avatar-placeholder avatar-eden profile-avatar">👑</div>
+      <div class="profile-info">
+        <div class="profile-username">EDEN_official<span class="verified"></span></div>
+        <div class="profile-stats">
+          <span><strong>127</strong> 게시물</span>
+          <span><strong>2.4M</strong> 팔로워</span>
+          <span><strong>12</strong> 팔로잉</span>
+        </div>
+      </div>
+    </div>
+    <div class="profile-bio">
+      <div class="profile-name">EDEN 공식 계정</div>
+      <div class="profile-desc">🌳 Where Dreams Bloom<br>마법소녀 본부 공식 계정입니다.<br>📞 문의: eden@official.com</div>
+    </div>
+    <button class="follow-btn" style="margin:0 20px 20px;width:calc(100% - 40px);">팔로우</button>
+    <div class="profile-tabs">
+      <div class="profile-tab active">📷</div>
+      <div class="profile-tab">📍</div>
+    </div>
+    <div class="profile-grid">
+      <div class="grid-item"><div class="img-placeholder img-eden" style="height:100%;">🌳</div></div>
+      <div class="grid-item"><div class="img-placeholder" style="height:100%;background:linear-gradient(135deg,#2d5016,#6b8e23);">✨</div></div>
+      <div class="grid-item"><div class="img-placeholder img-eden" style="height:100%;">👑</div></div>
+      <div class="grid-item"><div class="img-placeholder" style="height:100%;background:linear-gradient(135deg,#3a5a1c,#90b060);">🎉</div></div>
+      <div class="grid-item"><div class="img-placeholder img-eden" style="height:100%;">💫</div></div>
+      <div class="grid-item"><div class="img-placeholder" style="height:100%;background:linear-gradient(135deg,#4a7023,#98d660);">🌟</div></div>
+      <div class="grid-item deleted"><div class="img-placeholder img-glitch" style="height:100%;">░</div></div>
+      <div class="grid-item deleted"><div class="img-placeholder img-dark" style="height:100%;"></div></div>
+    </div>
+  </div>
+
+  <!-- PLT Profile -->
+  <div class="profile-page" id="profile-plt">
+    <div class="profile-header">
+      <div class="avatar-placeholder avatar-plt profile-avatar">PLT</div>
+      <div class="profile-info">
+        <div class="profile-username">PLT_official<span class="verified"></span></div>
+        <div class="profile-stats">
+          <span><strong>89</strong> 게시물</span>
+          <span><strong>1.8M</strong> 팔로워</span>
+          <span><strong>8</strong> 팔로잉</span>
+        </div>
+      </div>
+    </div>
+    <div class="profile-bio">
+      <div class="profile-name">PURELIGHT 공식</div>
+      <div class="profile-desc">📰 마법소녀 전문 미디어<br>진실을 전합니다.<br>🔗 purelight.news</div>
+    </div>
+    <button class="follow-btn" style="margin:0 20px 20px;width:calc(100% - 40px);">팔로우</button>
+    <div class="profile-tabs">
+      <div class="profile-tab active">📷</div>
+      <div class="profile-tab">📍</div>
+    </div>
+    <div class="profile-grid">
+      <div class="grid-item"><div class="img-placeholder img-plt" style="height:100%;">📰</div></div>
+      <div class="grid-item"><div class="img-placeholder" style="height:100%;background:linear-gradient(135deg,#004d4d,#00a0a0);">🎤</div></div>
+      <div class="grid-item"><div class="img-placeholder img-plt" style="height:100%;">📊</div></div>
+      <div class="grid-item"><div class="img-placeholder" style="height:100%;background:linear-gradient(135deg,#005555,#00b0b0);">🔴</div></div>
+      <div class="grid-item"><div class="img-placeholder img-plt" style="height:100%;">📋</div></div>
+      <div class="grid-item"><div class="img-placeholder" style="height:100%;background:linear-gradient(135deg,#003d3d,#009090);">📢</div></div>
+      <div class="grid-item deleted"><div class="img-placeholder img-glitch" style="height:100%;">░</div></div>
+    </div>
+  </div>
+
+  <!-- Fan Account Profile -->
+  <div class="profile-page" id="profile-love_jhy">
+    <div class="profile-header">
+      <div class="avatar-placeholder avatar-fan profile-avatar">♡</div>
+      <div class="profile-info">
+        <div class="profile-username">Love_jhy</div>
+        <div class="profile-stats">
+          <span><strong>45</strong> 게시물</span>
+          <span><strong>12.3K</strong> 팔로워</span>
+          <span><strong>234</strong> 팔로잉</span>
+        </div>
+      </div>
+    </div>
+    <div class="profile-bio">
+      <div class="profile-name">혜연이 팬계정 💕</div>
+      <div class="profile-desc">정혜연 팬클럽 회장🎀<br>혜연이만을 위한 계정!<br>✨ 팬아트 | 정보 | 일상</div>
+    </div>
+    <button class="follow-btn" style="margin:0 20px 20px;width:calc(100% - 40px);">팔로우</button>
+    <div class="profile-tabs">
+      <div class="profile-tab active">📷</div>
+      <div class="profile-tab">📍</div>
+    </div>
+    <div class="profile-grid">
+      <div class="grid-item"><div class="img-placeholder" style="height:100%;background:linear-gradient(135deg,#ff9a9e,#fecfef);">💝</div></div>
+      <div class="grid-item"><div class="img-placeholder" style="height:100%;background:linear-gradient(135deg,#ffa0a0,#ffd0e0);">🎀</div></div>
+      <div class="grid-item"><div class="img-placeholder" style="height:100%;background:linear-gradient(135deg,#ff8090,#ffc0d0);">💕</div></div>
+      <div class="grid-item"><div class="img-placeholder" style="height:100%;background:linear-gradient(135deg,#ff7080,#ffb0c0);">✨</div></div>
+      <div class="grid-item"><div class="img-placeholder" style="height:100%;background:linear-gradient(135deg,#ff6070,#ffa0b0);">📸</div></div>
+      <div class="grid-item"><div class="img-placeholder" style="height:100%;background:linear-gradient(135deg,#ff5060,#ff90a0);">💖</div></div>
+    </div>
+  </div>
+
+  <!-- JHY Official Profile -->
+  <div class="profile-page" id="profile-jhy_official">
+    <div class="profile-header">
+      <div class="avatar-placeholder avatar-personal profile-avatar">HY</div>
+      <div class="profile-info">
+        <div class="profile-username">jhy_official<span class="verified"></span></div>
+        <div class="profile-stats">
+          <span><strong>67</strong> 게시물</span>
+          <span><strong>892K</strong> 팔로워</span>
+          <span><strong>42</strong> 팔로잉</span>
+        </div>
+      </div>
+    </div>
+    <div class="profile-bio">
+      <div class="profile-name">정혜연 ✨</div>
+      <div class="profile-desc">EDEN 소속 S급 마법소녀 💫<br>여러분 사랑해요! 💕<br>📩 문의: eden@official.com</div>
+    </div>
+    <button class="follow-btn" style="margin:0 20px 20px;width:calc(100% - 40px);">팔로우</button>
+    <div class="profile-tabs">
+      <div class="profile-tab active">📷</div>
+      <div class="profile-tab">📍</div>
+    </div>
+    <div class="profile-grid">
+      <div class="grid-item"><div class="img-placeholder" style="height:100%;background:linear-gradient(135deg,#ffecd2,#fcb69f);">✨</div></div>
+      <div class="grid-item"><div class="img-placeholder" style="height:100%;background:linear-gradient(135deg,#ffe0c0,#fca080);">💕</div></div>
+      <div class="grid-item"><div class="img-placeholder" style="height:100%;background:linear-gradient(135deg,#ffd4b0,#fc9070);">🌸</div></div>
+      <div class="grid-item"><div class="img-placeholder" style="height:100%;background:linear-gradient(135deg,#ffc8a0,#fc8060);">🎀</div></div>
+      <div class="grid-item"><div class="img-placeholder" style="height:100%;background:linear-gradient(135deg,#ffbc90,#fc7050);">💖</div></div>
+      <div class="grid-item"><div class="img-placeholder" style="height:100%;background:linear-gradient(135deg,#ffb080,#fc6040);">⭐</div></div>
+      <div class="grid-item deleted"><div class="img-placeholder img-dark" style="height:100%;color:#333;font-size:14px;">...</div></div>
+      <div class="grid-item deleted"><div class="img-placeholder img-glitch" style="height:100%;">░</div></div>
+      <div class="grid-item deleted"><div class="img-placeholder img-dark" style="height:100%;"></div></div>
+    </div>
+  </div>
+
+  <!-- Seoyeon Profile -->
+  <div class="profile-page" id="profile-seo_yeon">
+    <div class="profile-header">
+      <div class="avatar-placeholder avatar-personal profile-avatar">SY</div>
+      <div class="profile-info">
+        <div class="profile-username">seoyeon_22<span class="verified"></span></div>
+        <div class="profile-stats">
+          <span><strong>54</strong> 게시물</span>
+          <span><strong>567K</strong> 팔로워</span>
+          <span><strong>89</strong> 팔로잉</span>
+        </div>
+      </div>
+    </div>
+    <div class="profile-bio">
+      <div class="profile-name">이서연 💪</div>
+      <div class="profile-desc">EDEN 소속 S급 마법소녀<br>모두를 지킬게요! 🛡️<br>📍 서울</div>
+    </div>
+    <button class="follow-btn" style="margin:0 20px 20px;width:calc(100% - 40px);">팔로우</button>
+    <div class="profile-tabs">
+      <div class="profile-tab active">📷</div>
+      <div class="profile-tab">📍</div>
+    </div>
+    <div class="profile-grid">
+      <div class="grid-item"><div class="img-placeholder" style="height:100%;background:linear-gradient(135deg,#a8edea,#fed6e3);">☕</div></div>
+      <div class="grid-item"><div class="img-placeholder" style="height:100%;background:linear-gradient(135deg,#90e0e0,#fec0d0);">💪</div></div>
+      <div class="grid-item"><div class="img-placeholder" style="height:100%;background:linear-gradient(135deg,#80d0d0,#feb0c0);">🌅</div></div>
+      <div class="grid-item"><div class="img-placeholder" style="height:100%;background:linear-gradient(135deg,#70c0c0,#fea0b0);">🏃‍♀️</div></div>
+      <div class="grid-item"><div class="img-placeholder" style="height:100%;background:linear-gradient(135deg,#60b0b0,#fe90a0);">🍜</div></div>
+      <div class="grid-item"><div class="img-placeholder" style="height:100%;background:linear-gradient(135deg,#50a0a0,#fe8090);">📖</div></div>
+      <div class="grid-item deleted"><div class="img-placeholder img-dark" style="height:100%;color:#300;font-size:11px;">살려...</div></div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <nav>
+    <span onclick="goHome()">🏠</span>
+    <span onclick="openSearch()">🔍</span>
+    <span>➕</span>
+    <span>🎬</span>
+    <span>👤</span>
+  </nav>
+
+  <script>
+    let adminMode = false;
+    const ADMIN_CODE = 'CANI'; // 나중에 변경 가능
+
+    function openProfile(profileId) {
+      document.getElementById('mainFeed').classList.add('hidden');
+      document.querySelectorAll('.profile-page').forEach(p => p.classList.remove('active'));
+      document.getElementById('profile-' + profileId).classList.add('active');
+      document.getElementById('backBtn').classList.add('show');
+      document.querySelector('.logo').style.visibility = 'hidden';
+      window.scrollTo(0, 0);
+    }
+
+    function goBack() {
+      document.getElementById('mainFeed').classList.remove('hidden');
+      document.querySelectorAll('.profile-page').forEach(p => p.classList.remove('active'));
+      document.getElementById('backBtn').classList.remove('show');
+      document.querySelector('.logo').style.visibility = 'visible';
+      document.getElementById('searchBar').classList.remove('show');
+    }
+
+    function goHome() {
+      goBack();
+      window.scrollTo(0, 0);
+    }
+
+    function openSearch() {
+      document.getElementById('searchBar').classList.toggle('show');
+      if (document.getElementById('searchBar').classList.contains('show')) {
+        document.getElementById('searchInput').focus();
+      }
+    }
+
+    function handleSearch() {
+      // 검색 기능 (나중에 확장 가능)
+    }
+
+    function openAdminModal() {
+      document.getElementById('adminModal').classList.add('show');
+      document.getElementById('adminInput').focus();
+    }
+
+    function closeAdminModal() {
+      document.getElementById('adminModal').classList.remove('show');
+      document.getElementById('adminInput').value = '';
+    }
+
+    function checkAdminCode() {
+      const code = document.getElementById('adminInput').value.toUpperCase();
+      if (code === ADMIN_CODE) {
+        activateAdminMode();
+      }
+    }
+
+    function submitAdminCode() {
+      checkAdminCode();
+    }
+
+    function activateAdminMode() {
+      adminMode = true;
+      closeAdminModal();
+      
+      // 삭제된 게시물들 표시
+      document.querySelectorAll('.post.deleted').forEach(post => {
+        post.classList.add('revealed');
+      });
+      
+      document.querySelectorAll('.grid-item.deleted').forEach(item => {
+        item.classList.add('revealed');
+      });
+
+      // 콘솔에 메시지
+      console.log('%c[시스템] 관리자 모드 활성화', 'color: #ff0000; font-size: 14px;');
+      console.log('%ccan i... go home now?', 'color: #333; font-size: 11px;');
+    }
+
+    function closePostModal() {
+      document.getElementById('postModal').classList.remove('show');
+    }
+
+    // ESC로 모달 닫기
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeAdminModal();
+        closePostModal();
+      }
+    });
+
+    // 콘솔 힌트
+    console.log('%cNEOSTAR', 'font-size: 24px; font-weight: bold;');
+    console.log('%c듣고 있어?', 'color: #666; font-size: 11px;');
+  </script>
+</body>
+</html>
