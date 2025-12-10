@@ -139,7 +139,7 @@
   <div class="admin-modal" id="adminModal">
     <div class="admin-box">
       <h3>관리자 인증</h3>
-      <input type="text" class="admin-input" id="adminInput" maxlength="4" placeholder="● ● ● ●" oninput="checkAdminCode()">
+      <input type="text" class="admin-input" id="adminInput" maxlength="5" placeholder="● ● ● ● ●" oninput="checkAdminCode()">
       <div class="admin-buttons">
         <button class="admin-btn cancel" onclick="closeAdminModal()">취소</button>
         <button class="admin-btn confirm" onclick="submitAdminCode()">확인</button>
@@ -180,13 +180,6 @@
       </div>
     </div>
 
-    <!-- ============================================================
-         🔴 삭제된 게시물 (인증 후 피드 상단에 표시됨)
-         
-         📝 수정 방법:
-         - 내용: post-caption 안의 텍스트 변경
-         - 이미지: post-image의 style에서 background 변경
-         ============================================================ -->
     <div id="deletedPostsContainer">
       
       <div class="post deleted">
@@ -198,7 +191,7 @@
         <div class="post-image img-placeholder img-glitch" style="font-size:72px;">░</div>
         <div class="post-actions"><span onclick="toggleLike(this)">♡</span><span>💬</span><span>✈</span></div>
         <div class="post-likes">좋아요 <span class="like-count">???</span>개</div>
-        <div class="post-caption"><strong>[삭제됨]</strong> 3일째. 아직 안 왔어.</div>
+        <div class="post-caption"><strong>[삭제됨]</strong> 수요일은 유죄라니, 혼자서 자꾸 누구랑 대화하는거야?</div>
         <div class="post-time">??? 전</div>
       </div>
 
@@ -237,24 +230,26 @@
         <div class="post-image img-placeholder img-dark" style="color:#300;font-size:20px;">회수 완료</div>
         <div class="post-actions"><span onclick="toggleLike(this)">♡</span><span>💬</span><span>✈</span></div>
         <div class="post-likes">좋아요 <span class="like-count">0</span>개</div>
-        <div class="post-caption"><strong>[시스템]</strong> ███님이 회수되었습니다.</div>
+        <div class="post-caption"><strong>[ETERNAL ARKHIVE]</strong> ███님이 회수되었습니다.</div>
         <div class="post-time">처리 완료</div>
+      </div>
+
+      <div class="post deleted">
+        <div class="post-header">
+          <div class="post-avatar" style="background:#300;">!</div>
+          <span class="post-username">EDEN</span>
+          <span class="post-more">⋯</span>
+        </div>
+        <div class="post-image img-placeholder img-dark" style="color:#300;font-size:20px;">NƎDƎ</div>
+        <div class="post-actions"><span onclick="toggleLike(this)">♡</span><span>💬</span><span>✈</span></div>
+        <div class="post-likes">좋아요 <span class="like-count">0</span>개</div>
+        <div class="post-caption"><strong>CANI</strong> WHAT'S YOUR 『SIDE』?</div>
+        <div class="post-time">01/17</div>
       </div>
 
     </div>
 
-    <!-- ============================================================
-         📝 일반 게시물
-         
-         수정 방법:
-         - 이미지 변경: post-image의 style="background:..." 수정
-           또는 <img src="이미지URL" class="post-image"> 로 교체
-         - 내용 변경: post-caption 안의 텍스트 수정
-         - 댓글 추가: comments-section 안에 comment-item 추가
-         - 좋아요 수: like-count 안의 숫자 변경
-         ============================================================ -->
-
-    <!-- 게시물 1: EDEN -->
+    <!-- EDEN -->
     <div class="post">
       <div class="post-header">
         <div class="post-avatar avatar-eden" onclick="openProfile('eden')">👑</div>
@@ -283,7 +278,7 @@
       <div class="post-time">2시간 전</div>
     </div>
 
-    <!-- 게시물 2: PLT -->
+    <!-- PLT -->
     <div class="post">
       <div class="post-header">
         <div class="post-avatar avatar-plt" onclick="openProfile('plt')">PLT</div>
@@ -306,28 +301,28 @@
         </div>
         <div class="comment-item hint">
           <div class="comment-avatar" style="background:#111;">?</div>
-          <div class="comment-content"><strong>anon_0000</strong> can i...rest?<div class="comment-time">3시간 전</div></div>
+          <div class="comment-content"><strong>cluck_0922</strong> ⚠운영정책 위반으로 삭제된 댓글입니다.<div class="comment-time">3시간 전</div></div>
         </div>
       </div>
       <div class="post-time">5시간 전</div>
     </div>
 
-    <!-- 게시물 3: 팬계정 -->
+    <!-- 팬계정 -->
     <div class="post">
       <div class="post-header">
         <div class="post-avatar avatar-fan" onclick="openProfile('love_jhy')">♡</div>
         <span class="post-username" onclick="openProfile('love_jhy')">Love_jhy</span>
         <span class="post-more">⋯</span>
       </div>
-      <div class="post-image img-placeholder" style="background:linear-gradient(135deg,#ff9a9e,#fecfef);">💝</div>
+      <img src="https://i.ifh.cc/TpTpA8.jpg" class="post-image">
       <div class="post-actions">
         <span onclick="toggleLike(this)">♡</span>
         <span onclick="toggleComments(this)">💬</span>
         <span>✈</span>
       </div>
-      <div class="post-likes">좋아요 <span class="like-count">3,456</span>개</div>
+      <div class="post-likes">좋아요 <span class="like-count">456</span>개</div>
       <div class="post-caption"><strong>Love_jhy</strong> 혜연이 팬아트 그렸어요!! 💕 #정혜연 #팬아트</div>
-      <div class="post-comments-btn" onclick="toggleComments(this)">댓글 234개 모두 보기</div>
+      <div class="post-comments-btn" onclick="toggleComments(this)">댓글 34개 모두 보기</div>
       <div class="comments-section">
         <div class="comment-item">
           <div class="comment-avatar">🎨</div>
@@ -337,14 +332,14 @@
       <div class="post-time">8시간 전</div>
     </div>
 
-    <!-- 게시물 4: 이서연 -->
+    <!-- 정혜연 -->
     <div class="post">
       <div class="post-header">
-        <div class="post-avatar avatar-personal" onclick="openProfile('seo_yeon')">SY</div>
-        <span class="post-username" onclick="openProfile('seo_yeon')">seoyeon_22 <span class="verified"></span></span>
+        <div class="post-avatar avatar-personal" onclick="openProfile('jhy_official')">HY</div>
+        <span class="post-username" onclick="openProfile('jhy_official')">jhy_official <span class="verified"></span></span>
         <span class="post-more">⋯</span>
       </div>
-      <div class="post-image img-placeholder" style="background:linear-gradient(135deg,#a8edea,#fed6e3);">☕</div>
+      <img src="https://i.ifh.cc/zNwDyj.jpg" class="post-image">
       <div class="post-actions">
         <span onclick="toggleLike(this)">♡</span>
         <span onclick="toggleComments(this)">💬</span>
@@ -356,21 +351,25 @@
       <div class="comments-section">
         <div class="comment-item">
           <div class="comment-avatar">💕</div>
-          <div class="comment-content"><strong>eden_fan_01</strong> 서연언니 몸 조심하세요!! 💕<div class="comment-time">11시간 전</div></div>
+          <div class="comment-content"><strong>eden_fan_01</strong> 혜연언니 몸 조심하세요!! 💕<div class="comment-time">11시간 전</div></div>
+        </div>
+        <div class="comment-item">
+          <div class="comment-avatar">😴</div>
+          <div class="comment-content"><strong>겁많은두더지</strong> 저기 카페 나도 가보고 싶다...<div class="comment-time">11시간 전</div></div>
         </div>
         <div class="comment-item hint">
           <div class="comment-avatar" style="background:#111;">?</div>
-          <div class="comment-content"><strong>anon_0000</strong> can i...stop?<div class="comment-time">9시간 전</div></div>
+          <div class="comment-content"><strong>her_6834</strong> ⚠운영정책 위반으로 삭제된 댓글입니다<div class="comment-time">9시간 전</div></div>
         </div>
       </div>
       <div class="post-time">12시간 전</div>
     </div>
 
-    <!-- 게시물 5: 정혜연 -->
+    <!-- 게시물 5: 이서연 -->
     <div class="post">
       <div class="post-header">
-        <div class="post-avatar avatar-personal" onclick="openProfile('jhy_official')">HY</div>
-        <span class="post-username" onclick="openProfile('jhy_official')">jhy_official <span class="verified"></span></span>
+        <div class="post-avatar avatar-personal" onclick="openProfile('seo_yeon')">SY</div>
+        <span class="post-username" onclick="openProfile('seo_yeon')">seoyeon_22 <span class="verified"></span></span>
         <span class="post-more">⋯</span>
       </div>
       <div class="post-image img-placeholder" style="background:linear-gradient(135deg,#ffecd2,#fcb69f);">✨</div>
@@ -385,11 +384,11 @@
       <div class="comments-section">
         <div class="comment-item">
           <div class="comment-avatar">💕</div>
-          <div class="comment-content"><strong>Love_jhy</strong> 혜연아 사랑해!!! 💕💕💕<div class="comment-time">1일 전</div></div>
+          <div class="comment-content"><strong>Love_sy</strong> 서연아 사랑해!!! 💕💕💕<div class="comment-time">1일 전</div></div>
         </div>
         <div class="comment-item hint">
           <div class="comment-avatar" style="background:#111;">?</div>
-          <div class="comment-content"><strong>anon_0000</strong> can i...go home?<div class="comment-time">20시간 전</div></div>
+          <div class="comment-content"><strong>story_3398</strong> ⚠운영정책 위반으로 삭제된 댓글입니다.<div class="comment-time">20시간 전</div></div>
         </div>
       </div>
       <div class="post-time">1일 전</div>
@@ -397,10 +396,7 @@
 
   </div>
 
-  <!-- ============================================================
-       프로필 페이지들
-       ============================================================ -->
-  
+
   <div class="profile-page" id="profile-eden">
     <div class="profile-header">
       <div class="profile-avatar avatar-eden">👑</div>
@@ -535,11 +531,7 @@
   </nav>
 
   <script>
-    /* ============================================================
-       ⚙️ 설정
-       관리자 코드를 바꾸고 싶으면 아래 'CANI'를 수정하세요
-       ============================================================ */
-    const ADMIN_CODE = 'CANI';
+    const ADMIN_CODE = 'vaie2r';
     let adminMode = false;
 
     function openProfile(id) {
